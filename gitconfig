@@ -1,0 +1,20 @@
+[user]
+	name = Kevin Murray
+	email = spam@kdmurray.id.au
+	signingkey = 0x205B4780
+[github]
+	user = kdmurray91
+[pull]
+	default = tracking
+[push]
+	default = tracking
+[core]
+	whitespace = fix
+	editor = vim
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[tar "tar.xz"]
+	command = xz -c
