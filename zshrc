@@ -83,6 +83,9 @@ if ! zgen saved; then
     zgen load sharat87/zsh-vim-mode
     zgen load b4b4r07/zsh-vimode-visual
 
+    # Gitignore generator
+    zgen load voronkovich/gitignore.plugin.zsh
+
     # Theme
     zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
