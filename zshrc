@@ -5,6 +5,7 @@
 export LANG=en_AU.UTF-8
 export EDITOR='vim'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
+export VIRTUALENVWRAPPER_PYTHON=python3
 
 setopt autocd extendedglob notify
 setopt histignorespace
