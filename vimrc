@@ -26,7 +26,7 @@ call vundle#end()
 
 " pymode config
 let g:pymode_lint_ignore = 'E501,W0611'
-let g:pymode_python = 'python'
+let g:pymode_python = 'python3'
 let g:pymode_syntax_print_as_function = 1
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope = 0
@@ -59,6 +59,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-s>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsUsePythonVersion = 3
 
 " Gist
 let g:gist_detect_filetype = 1
