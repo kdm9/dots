@@ -14,5 +14,6 @@ if [ ! -d $VI/bundle/Vundle.vim ]; then
     mkdir $VI/bundle
     git clone https://github.com/VundleVim/Vundle.vim.git $VI/bundle/Vundle.vim
 fi
+ln -sf $HERE/vimrc $VI
+vim +PluginInstall +qall
 unset VI
-ln -sf $HERE/vimrc $HOME/.vim
