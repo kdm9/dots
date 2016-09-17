@@ -27,6 +27,8 @@ ZSH_TMUX_AUTOQUIT=false
 ZSH_TMUX_AUTOCONNECT=false
 ZSH_TMUX_FIXTERM=false
 
+BULLETTRAIN_CONTEXT_SHOW=true
+BULLETTRAIN_IS_SSH_CLIENT=true
 
 ################################################################################
 #                                     Zgen                                     #
