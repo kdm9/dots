@@ -8,7 +8,11 @@ do
     ln -fs "$HERE/${dotfile}" "$HOME/.${dotfile}"
 done
 
-mkdir -p $HOME/.vim
+VI=$HOME/.vim
+mkdir -p $VI
+if [ ! -d $VI/bundle/Vundle.vim ]; then
+    mkdir $VI/bundle
+    git clone https://github.com/VundleVim/Vundle.vim.git $VI/bundle/Vundle.vim
+fi
+unset VI
 ln -sf $HERE/vimrc $HOME/.vim
-
-

@@ -6,7 +6,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'kdmurray91/kdm801-vim'
-Plugin 'blindFS/vim-taskwarrior'
 Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'Rykka/InstantRst'
