@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -xe
-HERE="$(readlink -f "$0"/.. )"
+HERE=$(dirname $(readlink -f "$0"))
 
 for dotfile in gitconfig tmux.conf zshrc
 do
