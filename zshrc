@@ -30,12 +30,15 @@ ZSH_TMUX_FIXTERM=false
 ################################################################################
 #                                     Zgen                                     #
 ################################################################################
+# Double underscore not to clash w/ zgen's internals
 __ZGEN_DIR="$HOME/.zgen"
 __ZGEN="$__ZGEN_DIR/zgen.zsh"
 if [ ! -f $__ZGEN ]; then
     git clone https://github.com/tarjoilija/zgen.git $__ZGEN_DIR
 fi
 source $__ZGEN
+unset __ZGEN_DIR
+unset __ZGEN
 
 
 ################################################################################
@@ -113,7 +116,7 @@ alias less='less -SR'
 alias makejavalessshit='wmname LG3D'
 alias nmcli='/usr/bin/nmcli -p'
 alias sa='sudo aptitude'
-alias speedtest='wget -O /tmp/speedtest.dat ftp://ftp.iinet.net.au/test10MB.dat; rm /tmp/speedtest.dat'
+alias speedtest='wget -O /dev/null ftp://ftp.iinet.net.au/test10MB.dat'
 alias sum='paste -sd+ | bc'
 alias svim='sudo vim'
 alias t='task'
