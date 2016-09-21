@@ -3,7 +3,7 @@
 set -xe
 HERE=$(dirname $(readlink -f "$0"))
 
-for dotfile in gitconfig tmux.conf zshrc
+for dotfile in gitconfig tmux.conf zshrc zshenv
 do
     ln -fs "$HERE/${dotfile}" "$HOME/.${dotfile}"
 done
