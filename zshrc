@@ -105,6 +105,7 @@ bindkey '^S' history-incremental-search-forward
 #                         KDM specific aliases & funcs                         #
 ################################################################################
 
+test -f "$HOME/.dots/venv-jl.sh" && source "$HOME/.dots/venv-jl.sh"
 test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
 
 
