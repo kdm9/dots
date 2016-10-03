@@ -17,6 +17,7 @@ Plugin 'honza/vim-snippets'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'godlygeek/tabular'
+Plugin 'beloglazov/vim-online-thesaurus'
 " All of your Plugins must be added before the following line
 call vundle#end()
 
