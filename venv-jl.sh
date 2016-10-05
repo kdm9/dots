@@ -35,20 +35,22 @@ function jlmkenv() {
 }
 
 function jlrmenv() {
-    env="$1"
-    if [ -z "$env" ]
+    if [ $# -lt 1 ]
     then
-        echo "USAGE: jlrmenv <virtualenv_name>"
+        echo "USAGE: jlrmenv <virtualenv_name> ..."
         return 1
     fi
-    if [ ! -d "$JLENV_HOME/${env}.env" ]
-    then
-        echo "Not a virtual environment: '$env'"
-        return 1
-    fi
+    for env in $@
+    do
+        if [ ! -d "$JLENV_HOME/${env}.env" ]
+        then
+            echo "Not a virtual environment: '$env'"
+            return 1
+        fi
 
-    echo "Removing Julia virtual environment '$env'"
-    rm -rf "$JLENV_HOME/${env}.env"
+        echo "Removing Julia virtual environment '$env'"
+        rm -rf "$JLENV_HOME/${env}.env"
+    done
 }
 
 
