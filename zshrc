@@ -11,6 +11,7 @@ setopt autocd extendedglob notify
 setopt histignorespace
 setopt autopushd
 unsetopt beep
+stty -ixon
 
 
 ################################################################################
