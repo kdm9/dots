@@ -83,6 +83,15 @@ unset __ZGEN
 
 # Uncomment the below while debugging, forces reset
 # zgen reset
+if [ -n "$SSH_CLIENT" ]
+then
+    BULLETTRAIN_CONTEXT_BG=red
+    BULLETTRAIN_CONTEXT_FG=black
+else
+    BULLETTRAIN_CONTEXT_BG=green
+    BULLETTRAIN_CONTEXT_FG=white
+fi
+
 
 ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc)
 
