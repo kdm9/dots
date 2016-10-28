@@ -60,7 +60,11 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets=",ls"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsUsePythonVersion = 3
+if has('python3')
+  let g:UltiSnipsUsePythonVersion = 3
+else
+  let g:UltiSnipsUsePythonVersion = 2
+endif
 
 " Gist
 let g:gist_detect_filetype = 1
@@ -226,6 +230,8 @@ nnoremap <leader>w <Esc>:wa<CR>
 " Sort selection
 vnoremap <leader>s :sort<CR>
 
+inoremap <leader>t <C-o>:%s/\s\+$//gc<CR>
+nnoremap <leader>t <ESC>:%s/\s\+$//gc<CR>
 
 " Ctags
 set tags=./tags;$HOME
