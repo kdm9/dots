@@ -5,7 +5,7 @@
 export LANG=en_AU.UTF-8
 export EDITOR='vim'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
-export VIRTUALENVWRAPPER_PYTHON=python3
+export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENVWRAPPER_PYTHON:-python3}"
 
 setopt autocd extendedglob notify
 setopt histignorespace
@@ -13,6 +13,7 @@ setopt autopushd
 unsetopt beep
 stty -ixon
 
+test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
 
 ################################################################################
 #                                Plugin config                                 #
@@ -107,7 +108,6 @@ bindkey '^S' history-incremental-search-forward
 ################################################################################
 
 test -f "$HOME/.dots/venv-jl.sh" && source "$HOME/.dots/venv-jl.sh"
-test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
 
 
 alias findswp='find -name \*.swp'
@@ -175,3 +175,6 @@ fi
 
 # Ensure tmux termcap is defined
 TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
+
+# Source again at end, to ensure local has precidence
+test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
