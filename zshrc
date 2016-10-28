@@ -177,6 +177,7 @@ fi
 OT="$TERM"
 TERM=tmux
 if [ ! tput cols >/dev/null 2>&1 ]
+then
     tic ${HOME}/.dots/tmux.term
 fi
 TERM="$OT"
