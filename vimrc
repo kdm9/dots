@@ -10,10 +10,12 @@ Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'Rykka/InstantRst'
 Plugin 'klen/python-mode'
-Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+if v:version >= 704
+Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+endif
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'godlygeek/tabular'
