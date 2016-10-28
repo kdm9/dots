@@ -174,11 +174,4 @@ if [ -n "$(which xrandr)" ]; then
 fi
 
 # Ensure tmux termcap is defined
-OT="$TERM"
-TERM=tmux
-if [ ! tput cols >/dev/null 2>&1 ]
-then
-    tic ${HOME}/.dots/tmux.term
-fi
-TERM="$OT"
-unset OT
+TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
