@@ -30,3 +30,5 @@ do
     fi
 
 done
+
+export PATH="$HOME/.dots/bin:$PATH"
