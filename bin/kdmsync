@@ -1,0 +1,154 @@
+#!/bin/bash
+
+
+# TODO for debugging
+#set -x
+
+set -eo pipefail
+
+# Global constants
+CONFIGDIR="$HOME/.kdmsync"
+RSYNC=rsync
+
+
+
+dst=""
+src=""
+verb=0
+
+function show_help() {
+    # TODO remove set
+    set +x
+    echo "USAGE: kdmsync [options] <SOURCE_CFG> <DEST_CFG>"
+    echo
+    echo "OPTIONS:"
+    echo "    -f    Force operation (default is to ask on CLI)"
+    echo
+    echo "One of SOURCE_CFG or DEST_CFG must be 'local', indicating the current"
+    echo "computer. The other must refer to an existing set of config files"
+    echo "(see below). Files will be transferred from the local path(s) to the"
+    echo "destination paths."
+    echo
+    echo "Config files are placed under a directory within '$CONFIGDIR'"
+    echo
+    echo "A config directory should contain:"
+    echo "    - config.sh  # A config file in bash"
+    echo "    - files      # (optional) An rsync files-from file"
+    echo "    - filter     # (optional) An rsync filter file"
+    echo "    - exclude    # (optional) An rsync exclude file"
+    echo
+    echo "config.sh must contain the following variables:"
+    echo
+    echo " * RSYNCOPTS: Additional options to rsync, appended to '-rhivaP --del'"
+    echo " * RSYNCOPTS_{PUSH,PULL}: Additional options to rsync. These are added"
+    echo "                          if the local repository is the destination or"
+    echo "                          source respectively"
+    echo " * LOCALPATH: A path on the local computer that is the source/target"
+    echo " * REMOTEURL: An rsync URL to the target on a remote computer"
+
+}
+
+function perror() {
+    echo "ERROR: $@"
+    echo
+    show_help
+    exit 1
+}
+
+while getopts "fh?s:d:" opt; do
+    case "$opt" in
+    h|\?)
+        show_help
+        exit 0
+        ;;
+    s)
+        src="$OPTARG"
+        ;;
+    d)
+        dst="$OPTARG"
+        ;;
+    f)
+        force=yes
+        ;;
+    esac
+done
+
+src=${@:$OPTIND:1}
+dst=${@:$OPTIND+1:1}
+
+if [ -z "$src" ] || [ -z "$dst" ]
+then
+    perror "Must specifiy source and destination configs"
+fi
+
+if [ "$src" == "local" ]
+then
+    cfg="${CONFIGDIR}/${dst}"
+    export KDMSYNC_MODE="PUSH"
+elif [ "$dst" == "local" ]
+then
+    cfg="${CONFIGDIR}/${src}"
+    export KDMSYNC_MODE="PULL"
+else
+    perror "One of -s or -d must be 'local'"
+fi
+
+cfgfile="$cfg/config.sh"
+if [ ! -d "$cfg" ] || [ ! -f "$cfgfile" ]
+then
+    perror "Source/destination config must exist"
+fi
+
+. $cfgfile
+
+if [ -z "$LOCALPATH" ] || [ ! -e "$LOCALPATH" ]
+then
+    perror "config file $cfgfile does not specify a LOCALPATH"
+fi
+
+if [ -z "$REMOTEURL" ]
+then
+    perror "config file $cfgfile does not specify a REMOTEURL"
+fi
+
+
+if [ -f "$cfg/filter" ]
+then
+    RSYNCOPTS+=("--filter=merge $cfg/filter")
+fi
+
+if [ -f "$cfg/files" ]
+then
+    RSYNCOPTS+=("--files-from=$cfg/files")
+fi
+
+if [ -f "$cfg/exclude" ]
+then
+    RSYNCOPTS+=("--exclude-from=$cfg/exclude")
+fi
+
+if [ "$src" == "local" ]
+then
+    SRCURL="$LOCALPATH"
+    DSTURL="$REMOTEURL"
+    RSYNCOPTS+="${RSYNCOPTS_PUSH[@]}"
+else
+    SRCURL="$REMOTEURL"
+    DSTURL="$LOCALPATH"
+    RSYNCOPTS+="${RSYNCOPTS_PULL[@]}"
+fi
+
+echo "rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
+rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL
+
+if [ "x$force" != "xyes" ]
+then
+    read -p "Proceed with sync? (1 for yes, 0 for no)" -t 60 -N 1 DO_IT
+    if [ "$DO_IT" != "1" ]
+    then
+        exit 0
+    fi
+fi
+
+echo "rsync -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
+rsync -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL
