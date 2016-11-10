@@ -37,12 +37,11 @@ function show_help() {
     echo "    - filter     # (optional) An rsync filter file"
     echo "    - exclude    # (optional) An rsync exclude file"
     echo
-    echo "config.sh must contain the following variables:"
+    echo "config.sh must define the following variables:"
     echo
     echo " * RSYNCOPTS: Additional options to rsync, appended to '-rhivaP --del'"
     echo " * RSYNCOPTS_{PUSH,PULL}: Additional options to rsync. These are added"
-    echo "                          if the local repository is the destination or"
-    echo "                          source respectively"
+    echo "              the local repository is the destination or source respectively"
     echo " * LOCALPATH: A path on the local computer that is the source/target"
     echo " * REMOTEURL: An rsync URL to the target on a remote computer"
 
@@ -61,12 +60,6 @@ while getopts "fh?s:d:" opt; do
         show_help
         exit 0
         ;;
-    s)
-        src="$OPTARG"
-        ;;
-    d)
-        dst="$OPTARG"
-        ;;
     f)
         force=yes
         ;;
@@ -84,11 +77,9 @@ fi
 if [ "$src" == "local" ]
 then
     cfg="${CONFIGDIR}/${dst}"
-    export KDMSYNC_MODE="PUSH"
 elif [ "$dst" == "local" ]
 then
     cfg="${CONFIGDIR}/${src}"
-    export KDMSYNC_MODE="PULL"
 else
     perror "One of -s or -d must be 'local'"
 fi
@@ -131,18 +122,18 @@ if [ "$src" == "local" ]
 then
     SRCURL="$LOCALPATH"
     DSTURL="$REMOTEURL"
-    RSYNCOPTS+="${RSYNCOPTS_PUSH[@]}"
+    RSYNCOPTS+=(${RSYNCOPTS_PUSH[@]})
 else
     SRCURL="$REMOTEURL"
     DSTURL="$LOCALPATH"
-    RSYNCOPTS+="${RSYNCOPTS_PULL[@]}"
+    RSYNCOPTS+=(${RSYNCOPTS_PULL[@]})
 fi
-
-echo "rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
-rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL
 
 if [ "x$force" != "xyes" ]
 then
+    echo "rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
+    rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL
+
     read -p "Proceed with sync? (1 for yes, 0 for no)" -t 60 -N 1 DO_IT
     if [ "$DO_IT" != "1" ]
     then
