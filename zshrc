@@ -14,6 +14,7 @@ unsetopt beep
 stty -ixon
 
 # Source here to ensure all plugins have paths etc. set right
+test -f "$HOME/.zshlocal.pre" && source "$HOME/.zshlocal.pre"
 test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
 
 ################################################################################
