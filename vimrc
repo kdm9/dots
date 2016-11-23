@@ -1,4 +1,3 @@
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
@@ -29,7 +28,11 @@ call vundle#end()
 
 " pymode config
 let g:pymode_lint_ignore = 'E501,W0611'
-let g:pymode_python = 'python3'
+if has("python3")
+  let g:pymode_python = 'python3'
+else
+  let g:pymode_python = 'python2'
+endif
 let g:pymode_syntax_print_as_function = 1
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope = 0
@@ -62,11 +65,13 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets=",ls"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-if has('python3')
-  let g:UltiSnipsUsePythonVersion = 3
+
+if has("python3")
+  let g:UltiSnipsUsePythonersion = 3
 else
   let g:UltiSnipsUsePythonVersion = 2
 endif
+
 
 " Gist
 let g:gist_detect_filetype = 1
