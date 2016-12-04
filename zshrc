@@ -57,8 +57,7 @@ unset __ZGEN
 #                           Zgen plugin install/load                           #
 ################################################################################
 
-# Uncomment the below while debugging, forces reset
-# zgen reset
+# Colour context red if we're on a remote server
 if [ -n "$SSH_CLIENT" ]
 then
     BULLETTRAIN_CONTEXT_BG=red
@@ -68,7 +67,8 @@ else
     BULLETTRAIN_CONTEXT_FG=white
 fi
 
-
+# Uncomment the below while debugging, forces reset
+# zgen reset
 ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc)
 
 if ! zgen saved; then
@@ -134,5 +134,5 @@ TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
 #                              load zshlocal.post                              #
 ################################################################################
 
-# Source here to ensure all post script is final
+# Source here to ensure post script is final
 test -f "$HOME/.zshlocal.post" && source "$HOME/.zshlocal.post"
