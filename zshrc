@@ -7,6 +7,11 @@ export EDITOR='vim'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENVWRAPPER_PYTHON:-python3}"
 
+function sourceifexists() {
+    file="$1"
+    test -f "$file" && source "$file"
+}
+
 setopt autocd extendedglob notify
 setopt histignorespace
 setopt autopushd
@@ -14,8 +19,8 @@ unsetopt beep
 stty -ixon
 
 # Source here to ensure all plugins have paths etc. set right
-test -f "$HOME/.zshlocal.pre" && source "$HOME/.zshlocal.pre"
-test -f "$HOME/.zshlocal" && source "$HOME/.zshlocal"
+sourceifexists "$HOME/.zshlocal.pre"
+sourceifexists "$HOME/.zshlocal"
 
 ################################################################################
 #                                Plugin config                                 #
@@ -118,72 +123,9 @@ bindkey '^S' history-incremental-search-forward
 #                         KDM specific aliases & funcs                         #
 ################################################################################
 
-# Aliases
-
-alias findswp='find -name \*.swp'
-alias gap='git add --patch'
-alias gds='git diff --staged'
-alias gpdeb='git push origin master upstream pristine-tar --follow-tags'
-alias gsh='git stash'
-alias ifconfig='/sbin/ifconfig'
-alias ipy='ipython3'
-alias jnb='jupyter notebook'
-alias l='ls -lhF'
-alias ll='ls -lahf'
-alias less='less -SR'
-alias makejavalessshit='wmname LG3D'
-alias nmcli='/usr/bin/nmcli -p'
-alias sa='sudo aptitude'
-alias speedtest='wget -O /dev/null ftp://ftp.iinet.net.au/test10MB.dat'
-alias sum='paste -sd+ | bc'
-alias svim='sudo vim'
-alias t='task'
-alias tt='task tdo'
-alias tp='task project:phd'
-alias ts='task sync'
-alias texspell='aspell -d en_GB -t -c '
-alias time='/usr/bin/time -f "\n\n%%TIME: [usr:%U sys:%S %P wall:%E rss:%M]"'
-alias trimspace='perl -p -i -e "s/\s+$/\n/"'
-alias utc='TZ=UTC date'
-alias vim='vim -p'
-alias whatismyip='wget -qO- icanhazip.com'
-
-test -f "$HOME/.dots/venv-jl.sh" && source "$HOME/.dots/venv-jl.sh"
-
-function git-recover() {
-    file="$1"
-    if [ -z "$file" ]; then echo "USAGE: git-recover <filename>"; exit; fi
-    git checkout "$(git rev-list -n 1 HEAD -- \"$file\")^" -- "$file"
-}
-
-function mkcd {
-	mkdir -p "$1" && cd "$1"
-}
-
-if [ -n "$(which xrandr)" ]; then
-    function xr() {
-        CMD=$(xrandr | awk '
-        BEGIN{
-            printf("xrandr ");
-            m=""
-        }
-        {
-            if ($2 ~ /connected/){
-                printf("--output %s --auto ", $1);
-            }
-            if ($1 ~ /^eDP/){
-                m=$1
-            } else if ($2 == "connected") {
-                printf("--left-of %s ", m);
-            }
-        }
-        END{printf("\n");}
-        ')
-        echo $CMD
-        eval $CMD
-
-    }
-fi
+sourceifexists "$HOME/.dots/aliases.sh"
+sourceifexists "$HOME/.dots/functions.sh"
+sourceifexists "$HOME/.dots/venv-jl.sh"
 
 # Ensure tmux termcap is defined
 TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
