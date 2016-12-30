@@ -74,12 +74,13 @@ ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc)
 if ! zgen saved; then
     # OMZsh and some plugins
     zgen oh-my-zsh
-    zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/debian
-    zgen oh-my-zsh plugins/virtualenvwrapper
-    zgen oh-my-zsh plugins/taskwarrior
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/ssh-agent
     zgen oh-my-zsh plugins/sudo
+    zgen oh-my-zsh plugins/taskwarrior
     zgen oh-my-zsh plugins/tmux
+    zgen oh-my-zsh plugins/virtualenvwrapper
 
     # Hist search
     zgen load zsh-users/zsh-history-substring-search
