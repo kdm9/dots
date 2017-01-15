@@ -15,6 +15,20 @@ function jllsenv() {
     done
 }
 
+function jllnpkgdir() {
+    if [ "${JULIA_VENV:-NOTAJLVENVACTIVE}" = "NOTAJLVENVACTIVE" ]
+    then
+        echo "Error: jllnpkgdir can only be used within an active venv"
+        return 1
+    fi
+    dir="$(readlink -f .)"
+    pkg="$(basename $dir .jl)"
+    pkgdir="$(julia -e 'println(Pkg.dir())')"
+    echo "$pkg" >>  "$pkgdir/REQUIRE"
+    ln -s "$dir" "$pkgdir/$pkg"
+    julia -e "Pkg.update()"
+}
+
 function jlmkenv() {
     env="$1"
     if [ -z "$env" ]
