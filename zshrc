@@ -66,6 +66,16 @@ else
     BULLETTRAIN_CONTEXT_BG=green
     BULLETTRAIN_CONTEXT_FG=white
 fi
+BULLETTRAIN_PROMPT_ORDER=(
+    time
+    status
+    custom
+    context
+    dir
+    virtualenv
+    git
+    cmd_exec_time
+  )
 
 # Uncomment the below while debugging, forces reset
 # zgen reset
