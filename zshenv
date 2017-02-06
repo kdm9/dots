@@ -2,6 +2,11 @@
 #                                  $HOME/opt                                   #
 ################################################################################
 
+if [ -d /usr/lib/debian-med/bin ]
+then
+   export PATH="/usr/lib/debian-med/bin:$PATH"
+fi
+
 AUTOPATH_PREFIXES=( "$HOME" "$HOME/opt" "$HOME/.local")
 
 for prefix in "${AUTOPATH_PREFIXES[@]}"
