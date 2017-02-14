@@ -15,12 +15,16 @@ Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
+Plugin 'jpalardy/vim-slime'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'godlygeek/tabular'
-Plugin 'beloglazov/vim-online-thesaurus'
 " All of your Plugins must be added before the following line
 call vundle#end()
+
+""  Old plugins:
+" Plugin 'baruchel/vim-notebook'
+" Plugin 'beloglazov/vim-online-thesaurus'
 
 
 
@@ -75,6 +79,12 @@ endif
 
 " Gist
 let g:gist_detect_filetype = 1
+
+
+" SLIME
+let g:slime_target = "tmux"
+let g:slime_paste_file = "/dev/shm/" . getpid() . ".slime_paste"
+let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
 
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
