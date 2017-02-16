@@ -45,8 +45,8 @@ let g:pymode_rope = 0
 let g:pandoc#biblio#sources = 'b'
 let g:pandoc#biblio#use_bibtool = 1
 let g:pandoc#command#autoexec_on_writes = 0
-let g:pandoc#command#autoexec_command = 'Pandoc'
-let g:pandoc#command#templates_file = 'bundle/kdm801-vim/vim-pandoc-templates'
+let g:pandoc#command#autoexec_command = 'Pandoc #cite'
+let g:pandoc#command#templates_file = expand('~/.vim/bundle/kdm801-vim/vim-pandoc-templates')
 let g:pandoc#folding#level = 0
 let g:pandoc#folding#fdc = 0
 let g:pandoc#formatting#equalprg = ''
@@ -58,7 +58,7 @@ let g:pandoc#syntax#conceal#use = 1
 
 " vimtex
 let g:vimtex_format_enabled = 1
-let g:vimtex_imaps_leader = ',t'
+let g:vimtex_imaps_leader = ',f'
 let g:vimtex_quickfix_mode = 0
 let g:vimtex_quickfix_mode = 0
 let g:vimtex_view_method = 'zathura'
