@@ -82,9 +82,11 @@ let g:gist_detect_filetype = 1
 
 
 " SLIME
-let g:slime_target = "tmux"
-let g:slime_paste_file = "/dev/shm/" . getpid() . ".slime_paste"
-let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
+if exists('$TMUX')
+    let g:slime_target = "tmux"
+    let g:slime_paste_file = "/dev/shm/" . getpid() . ".slime_paste"
+    let g:slime_default_config = {"socket_name": split('$TMUX', ",")[0], "target_pane": ":.1"}
+endif
 
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
@@ -130,7 +132,7 @@ endf
 
 """""""""""""""""" Custom filetype functions """""""""""""""""""""""""""""""
 fu Mail_mode()
-	set textwidth=79
+	set textwidth=72
 	highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 	call Sp2x()
 	set spell spelllang=en_au
@@ -199,8 +201,9 @@ call Sp4x()
 set nofoldenable
 set nonumber
 set textwidth=80
-set ignorecase
-set smartcase
+" set ignorecase
+" set smartcase
+set wildmenu  "menu for tab completion
 
 " Bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
@@ -212,7 +215,7 @@ highlight SpellBad term=standout term=underline cterm=underline
 """"""" FT-specific features """"""""""""""""""""""""""
 
 " Call my FT-specific mode functions
-autocmd BufRead,BufNewFile /tmp/mutt-* set filetype=pandoc
+autocmd BufRead,BufNewFile /tmp/mutt-* call Mail_mode()
 
 autocmd BufNewFile,BufRead Snakefile* set syntax=snakemake
 autocmd BufNewFile,BufRead *.rules set syntax=snakemake
