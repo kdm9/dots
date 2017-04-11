@@ -21,3 +21,8 @@
 	command = xz -c
 [tar "tar.zst"]
 	command = zstd -c
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
