@@ -118,6 +118,8 @@ if ! zgen saved; then
     # Theme
     zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
+    zgen load kloetzl/biozsh
+
     zgen save
 fi
 
