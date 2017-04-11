@@ -1,0 +1,3 @@
+#!/bin/sh
+# Aliases don't always work in subshells etc, so define as a script
+date +%Y-%m-%d
