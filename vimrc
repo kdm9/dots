@@ -225,6 +225,7 @@ autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 autocmd BufNewFile,BufRead *.mdpres set filetype=pandoc
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
+autocmd BufNewFile,BufRead *.jl set filetype=julia
 
 
 """""" Keyboad shortcuts """"""""""""""""""""""""""""""
