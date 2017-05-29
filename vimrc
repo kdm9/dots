@@ -132,12 +132,16 @@ endf
 
 """""""""""""""""" Custom filetype functions """""""""""""""""""""""""""""""
 fu Mail_mode()
-	set textwidth=72
+    set columns=80
+    autocmd VimResized * if (&columns > 80) | set columns=80 | endif
+    set wrap
+    set linebreak
+    nmap j gj
+    nmap k gk
 	highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 	call Sp2x()
 	set spell spelllang=en_au
     if v:version >= 703
-        set colorcolumn=+1        " highlight column after 'textwidth'
         set nofoldenable
     endif
 endf
