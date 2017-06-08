@@ -7,7 +7,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'kdmurray91/kdm801-vim'
 Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
-Plugin 'Rykka/InstantRst'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 if v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
@@ -16,8 +15,6 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
 Plugin 'jpalardy/vim-slime'
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
 Plugin 'godlygeek/tabular'
 if has("python") || has("python3")
 Plugin 'klen/python-mode'
