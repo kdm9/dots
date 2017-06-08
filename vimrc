@@ -8,10 +8,10 @@ Plugin 'kdmurray91/kdm801-vim'
 Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'Rykka/InstantRst'
-Plugin 'klen/python-mode'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 if v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
@@ -19,12 +19,11 @@ Plugin 'jpalardy/vim-slime'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'godlygeek/tabular'
+if has("python") || has("python3")
+Plugin 'klen/python-mode'
+endif
 " All of your Plugins must be added before the following line
 call vundle#end()
-
-""  Old plugins:
-" Plugin 'baruchel/vim-notebook'
-" Plugin 'beloglazov/vim-online-thesaurus'
 
 
 
@@ -35,7 +34,7 @@ let g:pymode_lint_ignore = 'E501,W0611'
 if has("python3")
   let g:pymode_python = 'python3'
 else
-  let g:pymode_python = 'python2'
+  let g:pymode_python = 'python'
 endif
 let g:pymode_syntax_print_as_function = 1
 let g:pymode_rope_complete_on_dot = 0
@@ -209,6 +208,8 @@ set textwidth=80
 " set smartcase
 set wildmenu  "menu for tab completion
 
+let &showbreak = '+++ '
+
 " Bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
 match BadWhitespace /\s\+$/
@@ -226,7 +227,7 @@ autocmd BufNewFile,BufRead *.rules set syntax=snakemake
 autocmd BufNewFile,BufRead *.snakefile set syntax=snakemake
 autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
-autocmd BufNewFile,BufRead *.mdpres set filetype=pandoc
+autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
 autocmd BufNewFile,BufRead *.jl set filetype=julia
