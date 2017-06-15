@@ -132,6 +132,7 @@ fu Mail_mode()
     autocmd VimResized * if (&columns > 80) | set columns=80 | endif
     set wrap
     set linebreak
+    let &showbreak = '  '
     nmap j gj
     nmap k gk
 	highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
@@ -226,6 +227,8 @@ autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
+
+autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
 
 autocmd BufNewFile,BufRead *.jl set filetype=julia
 
