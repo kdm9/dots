@@ -1,25 +1,32 @@
+""""""""" Plugins """""""""""""
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
-" let Vundle manage Vundle, required
+
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'kdmurray91/kdm801-vim'
 Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'fidian/hexmode'
 if v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
+if v:version >= 705
+Plugin 'Valloric/YouCompleteMe'
+endif
 Plugin 'jpalardy/vim-slime'
 Plugin 'godlygeek/tabular'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 if has("python") || has("python3")
 Plugin 'klen/python-mode'
 endif
-" All of your Plugins must be added before the following line
+Plugin 'kdmurray91/kdm801-vim'
+
 call vundle#end()
 
 
@@ -60,11 +67,12 @@ let g:vimtex_quickfix_mode = 0
 let g:vimtex_view_method = 'zathura'
 
 " snippets
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips/"
 let g:UltiSnipsEditSplit = "context"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets=",ls"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsListSnippets = '<c-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 
 if has("python3")
   let g:UltiSnipsUsePythonersion = 3
@@ -87,54 +95,60 @@ endif
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
 fu Sp1x()
-	set tabstop=1
-	set shiftwidth=1
-	set expandtab
-	set softtabstop=1
+	setlocal tabstop=1
+	setlocal shiftwidth=1
+	setlocal expandtab
+	setlocal softtabstop=1
 endf
 
 fu Sp2x()
-	set tabstop=2
-	set shiftwidth=2
-	set expandtab
-	set softtabstop=2
+	setlocal tabstop=2
+	setlocal shiftwidth=2
+	setlocal expandtab
+	setlocal softtabstop=2
 endf
 
 fu Sp4x()
-	set tabstop=4
-	set shiftwidth=4
-	set expandtab
-	set softtabstop=4
+	setlocal tabstop=4
+	setlocal shiftwidth=4
+	setlocal expandtab
+	setlocal softtabstop=4
 endf
 
 fu Sp8x()
-	set tabstop=8
-	set shiftwidth=8
-	set expandtab
-	set softtabstop=8
+	setlocal tabstop=8
+	setlocal shiftwidth=8
+	setlocal expandtab
+	setlocal softtabstop=8
 endf
 
 fu Tab4nx()
-	set tabstop=4
-	set shiftwidth=4
-	set noexpandtab
+	setlocal tabstop=4
+	setlocal shiftwidth=4
+	setlocal noexpandtab
 endf
 
 fu Tab8nx()
-	set tabstop=8
-	set shiftwidth=8
-	set noexpandtab
+	setlocal tabstop=8
+	setlocal shiftwidth=8
+	setlocal noexpandtab
 endf
+
+fu WrapMode()
+    setlocal columns=80
+    setlocal textwidth=0
+    autocmd VimResized * if (&columns > 80) | setlocal columns=80 | endif
+    setlocal wrap
+    setlocal linebreak
+    let &l:showbreak = '  '
+    noremap j gj
+    noremap k gk
+endf
+
 
 """""""""""""""""" Custom filetype functions """""""""""""""""""""""""""""""
 fu Mail_mode()
-    set columns=80
-    autocmd VimResized * if (&columns > 80) | set columns=80 | endif
-    set wrap
-    set linebreak
-    let &showbreak = '  '
-    nmap j gj
-    nmap k gk
+    call WrapMode()
 	highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 	call Sp2x()
 	set spell spelllang=en_au
@@ -183,14 +197,14 @@ set encoding=utf-8
 set tabpagemax=50
 
 " Open help in new tab
-cabbrev help tab help
+"cabbrev help tab help
 
 " Secure crypto
 if v:version >= 703
     set cm=blowfish
 endif
 
-if v:version >= 740
+if v:version >= 704
     set clipboard=unnamedplus
 endif
 
@@ -201,12 +215,11 @@ endif
 call Sp4x()
 set nofoldenable
 set nonumber
-set textwidth=80
 " set ignorecase
 " set smartcase
 set wildmenu  "menu for tab completion
+set directory=~/.vim/tmp/
 
-let &showbreak = '+++ '
 
 " Bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
@@ -226,9 +239,11 @@ autocmd BufNewFile,BufRead *.snakefile set syntax=snakemake
 autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
+autocmd BufNewFile,BufRead *.mdpres,*.md call WrapMode()
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
 autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
+autocmd BufNewFile,BufRead *.Rmd call WrapMode()
 
 autocmd BufNewFile,BufRead *.jl set filetype=julia
 
