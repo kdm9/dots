@@ -10,6 +10,9 @@ Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'fidian/hexmode'
+if v:version >= 800
+Plugin 'jalvesaq/Nvim-R'
+endif
 if v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-rmarkdown'
