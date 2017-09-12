@@ -73,6 +73,7 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-tab>'
 let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+let g:ultisnips_python_style = "sphinx"
 
 if has("python3")
   let g:UltiSnipsUsePythonersion = 3
