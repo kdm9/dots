@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+from sys import stdin, stdout, stderr
+import re
+
+
+def hms2dec(hms):
+    finder = re.compile(r'(-?)([\d.]+[°*h])([\d.]*[\'’m]?)([\d.]*[”"s]?)([NESW]?)', re.IGNORECASE)
+    m = finder.search(hms)
+    if m is None:
+        return hms
+    sign, h, m, s, nesw = m.groups()
+    d = float(h[:-1])
+    if m:
+        d += float(m[:-1]) / 60
+    if s:
+        d += float(s[:-1]) / 3600
+    if sign == "-" or nesw.upper() in ('W', 'S'):
+        d *= -1
+    return d
+
+
+# List is to buffer all of stdin
+for line in list(stdin):
+    print(hms2dec(line.rstrip()))

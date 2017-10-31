@@ -10,6 +10,7 @@ Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'fidian/hexmode'
+Plugin 'dhruvasagar/vim-table-mode'
 if v:version >= 800
 Plugin 'jalvesaq/Nvim-R'
 endif
@@ -61,6 +62,7 @@ let g:pandoc#formatting#textwidth = 79
 let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 1
 
+let g:table_mode_corner='|'
 
 " vimtex
 let g:vimtex_format_enabled = 1
@@ -84,6 +86,11 @@ else
   let g:UltiSnipsUsePythonVersion = 2
 endif
 
+let R_assign = 0
+let R_in_buffer = 1
+let R_applescript = 0
+let R_tmux_split = 1
+let R_notmuxconf = 1
 
 " Gist
 let g:gist_detect_filetype = 1
@@ -274,9 +281,6 @@ nnoremap <leader>w <Esc>:wa<CR>
 
 " Sort selection
 vnoremap <leader>s :sort<CR>
-
-inoremap <leader>t <C-o>:%s/\s\+$//gc<CR>
-nnoremap <leader>t <ESC>:%s/\s\+$//gc<CR>
 
 " Ctags
 set tags=./tags;$HOME
