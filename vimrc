@@ -6,16 +6,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'lervag/vimtex'
+Plugin 'freitass/todo.txt-vim'
+"Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'fidian/hexmode'
-Plugin 'dhruvasagar/vim-table-mode'
+"Plugin 'dhruvasagar/vim-table-mode'
 if v:version >= 800
 Plugin 'jalvesaq/Nvim-R'
 endif
 if v:version >= 704
-Plugin 'vim-pandoc/vim-pandoc'
+"Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -25,7 +26,7 @@ Plugin 'Valloric/YouCompleteMe'
 endif
 Plugin 'jpalardy/vim-slime'
 Plugin 'godlygeek/tabular'
-Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'octol/vim-cpp-enhanced-highlight'
 if has("python") || has("python3")
 Plugin 'klen/python-mode'
 endif
@@ -225,6 +226,7 @@ endif
 " Default options
 call Sp4x()
 set nofoldenable
+set nohlsearch
 set nonumber
 " set ignorecase
 " set smartcase
@@ -250,11 +252,11 @@ autocmd BufNewFile,BufRead *.snakefile set syntax=snakemake
 autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
-autocmd BufNewFile,BufRead *.mdpres,*.md call WrapMode()
+"autocmd BufNewFile,BufRead *.mdpres,*.md call WrapMode()
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
 autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
-autocmd BufNewFile,BufRead *.Rmd call WrapMode()
+"autocmd BufNewFile,BufRead *.Rmd call WrapMode()
 
 autocmd BufNewFile,BufRead *.jl set filetype=julia
 
