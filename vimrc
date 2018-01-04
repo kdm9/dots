@@ -16,7 +16,7 @@ if v:version >= 800
 Plugin 'jalvesaq/Nvim-R'
 endif
 if v:version >= 704
-"Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -61,7 +61,7 @@ let g:pandoc#formatting#equalprg = ''
 let g:pandoc#formatting#mode = 'h'
 let g:pandoc#formatting#textwidth = 79
 let g:pandoc#syntax#conceal#urls = 1
-let g:pandoc#syntax#conceal#use = 1
+let g:pandoc#syntax#conceal#use = 0
 
 let g:table_mode_corner='|'
 
