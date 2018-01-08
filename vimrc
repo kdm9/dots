@@ -30,6 +30,7 @@ Plugin 'godlygeek/tabular'
 if has("python") || has("python3")
 Plugin 'klen/python-mode'
 endif
+Plugin 'junegunn/goyo.vim'
 Plugin 'kdmurray91/kdm801-vim'
 
 call vundle#end()
@@ -147,9 +148,7 @@ fu Tab8nx()
 endf
 
 fu WrapMode()
-    setlocal columns=80
     setlocal textwidth=0
-    autocmd VimResized * if (&columns > 80) | setlocal columns=80 | endif
     setlocal wrap
     setlocal linebreak
     let &l:showbreak = '  '
@@ -252,11 +251,10 @@ autocmd BufNewFile,BufRead *.snakefile set syntax=snakemake
 autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
-"autocmd BufNewFile,BufRead *.mdpres,*.md call WrapMode()
-autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
-
 autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
-"autocmd BufNewFile,BufRead *.Rmd call WrapMode()
+autocmd BufNewFile,BufRead *.mdpres,*.md,*.Rmd call WrapMode()
+
+autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
 autocmd BufNewFile,BufRead *.jl set filetype=julia
 
