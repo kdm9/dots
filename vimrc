@@ -88,15 +88,33 @@ else
   let g:UltiSnipsUsePythonVersion = 2
 endif
 
+" NvimR
 let R_assign = 0
 let R_in_buffer = 1
 let R_applescript = 0
 let R_tmux_split = 1
 let R_notmuxconf = 1
 
+" Goyo
+let g:goyo_height = '100%'
+
+function! s:goyo_enter()
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    set noshowcmd
+    set scrolloff=999
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+
+function! s:goyo_leave()
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    set scrolloff=5
+endfunction
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
 " Gist
 let g:gist_detect_filetype = 1
-
 
 " SLIME
 if exists('$TMUX')
@@ -104,6 +122,7 @@ if exists('$TMUX')
     let g:slime_paste_file = "/dev/shm/" . getpid() . ".slime_paste"
     let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.1"}
 endif
+
 
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
@@ -252,7 +271,7 @@ autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
 autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
-autocmd BufNewFile,BufRead *.mdpres,*.md,*.Rmd call WrapMode()
+autocmd BufNewFile,BufRead *.mdpres,*.md,*.Rmd,*.rst call WrapMode()
 
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()
 
