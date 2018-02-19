@@ -7,7 +7,7 @@ then
    export PATH="/usr/lib/debian-med/bin:$PATH"
 fi
 
-AUTOPATH_PREFIXES=( "$HOME" "$HOME/opt" "$HOME/.local")
+AUTOPATH_PREFIXES=( "$HOME" "$HOME/opt" "$HOME/.local" "$HOME/.cabal")
 
 for prefix in "${AUTOPATH_PREFIXES[@]}"
 do

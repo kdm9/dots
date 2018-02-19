@@ -7,11 +7,10 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'freitass/todo.txt-vim'
-"Plugin 'lervag/vimtex'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'fidian/hexmode'
-"Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'marshallward/vim-restructuredtext'
 if v:version >= 800
 Plugin 'jalvesaq/Nvim-R'
 endif
@@ -26,7 +25,6 @@ Plugin 'Valloric/YouCompleteMe'
 endif
 Plugin 'jpalardy/vim-slime'
 Plugin 'godlygeek/tabular'
-"Plugin 'octol/vim-cpp-enhanced-highlight'
 if has("python") || has("python3")
 Plugin 'klen/python-mode'
 endif
@@ -60,7 +58,7 @@ let g:pandoc#folding#level = 0
 let g:pandoc#folding#fdc = 0
 let g:pandoc#formatting#equalprg = ''
 let g:pandoc#formatting#mode = 'h'
-let g:pandoc#formatting#textwidth = 79
+"let g:pandoc#formatting#textwidth = 79
 let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 0
 
@@ -102,14 +100,14 @@ function! s:goyo_enter()
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
     set noshowcmd
-    set scrolloff=999
+    "set scrolloff=999
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 function! s:goyo_leave()
     silent !tmux set status on
     silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-    set scrolloff=5
+    "set scrolloff=5
 endfunction
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
@@ -286,10 +284,16 @@ let maplocalleader = ","
 inoremap <leader>m <Esc>:wa<CR>:make<CR>i
 nnoremap <leader>m <Esc>:wa<CR>:make<CR>
 
+" Goyo
+inoremap <leader>g <C-o>:Goyo<CR>
+nnoremap <leader>g :Goyo<CR>
+
 " Tab mgmt
 noremap <leader>q <Esc>:tabp<CR>
 noremap <leader>e <Esc>:tabn<CR>
 noremap <leader>n <Esc>:tabnew
+noremap <leader>h <Esc>:tabmove -1<CR>
+noremap <leader>l <Esc>:tabmove +1<CR>
 
 inoremap <leader>p <Esc>:set paste<CR>"+p<CR>:set nopaste<CR>a
 nnoremap <leader>p <Esc>:set paste<CR>"+p<CR>:set nopaste<CR>

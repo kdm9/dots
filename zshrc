@@ -7,6 +7,11 @@ export EDITOR='vim'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENVWRAPPER_PYTHON:-python3}"
 
+if [ -n "$(which lesspipe)" ]
+then
+    eval $(lesspipe)
+fi
+
 function sourceifexists() {
     file="$1"
     test -f "$file" && source "$file"
@@ -66,6 +71,7 @@ else
     BULLETTRAIN_CONTEXT_BG=green
     BULLETTRAIN_CONTEXT_FG=white
 fi
+BULLETTRAIN_SEGMENT_SEPARATOR="▌"
 BULLETTRAIN_PROMPT_ORDER=(
     time
     status
