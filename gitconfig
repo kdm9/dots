@@ -21,8 +21,9 @@
 	command = xz -c
 [tar "tar.zst"]
 	command = zstd -c
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+
+[diff "csv"]
+    wordRegex = "[^,]\\+"
+
+[diff "tsv"]
+    wordRegex = "[^\\t]\\\\+"

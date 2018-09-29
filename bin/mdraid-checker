@@ -1,0 +1,8 @@
+#!/bin/bash
+HOSTNAME='/bin/hostname'
+if egrep "\[.*_.*\]" /proc/mdstat  > /dev/null
+then
+    notify-send -u critical "Failure of one or more software RAIDs" \
+    "Something bad's happening with RAID(s)\n$(cat /proc/mdstat)\n"
+    exit 1
+fi

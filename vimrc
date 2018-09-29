@@ -81,7 +81,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 let g:ultisnips_python_style = "sphinx"
 
 if has("python3")
-  let g:UltiSnipsUsePythonersion = 3
+  let g:UltiSnipsUsePythonVersion = 3
 else
   let g:UltiSnipsUsePythonVersion = 2
 endif
@@ -90,8 +90,6 @@ endif
 let R_assign = 0
 let R_in_buffer = 1
 let R_applescript = 0
-let R_tmux_split = 1
-let R_notmuxconf = 1
 
 " Goyo
 let g:goyo_height = '100%'

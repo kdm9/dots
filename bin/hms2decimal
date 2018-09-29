@@ -4,7 +4,7 @@ import re
 
 
 def hms2dec(hms):
-    finder = re.compile(r'(-?)([\d.]+[°*h])([\d.]*[\'’m]?)([\d.]*[”"s]?)([NESW]?)', re.IGNORECASE)
+    finder = re.compile(r'(-?)([\d.]+[°*hd])([\d.]*[\'’m]?)([\d.]*[”"s]?)([NESW]?)', re.IGNORECASE)
     m = finder.search(hms)
     if m is None:
         return hms
