@@ -81,13 +81,13 @@ elif [ "$dst" == "local" ]
 then
     cfg="${CONFIGDIR}/${src}"
 else
-    perror "One of -s or -d must be 'local'"
+    perror "One of SOURCE or DESTINATION must be 'local'"
 fi
 
 cfgfile="$cfg/config.sh"
 if [ ! -d "$cfg" ] || [ ! -f "$cfgfile" ]
 then
-    perror "Source/destination config must exist"
+    perror "Remote source/destination config must exist"
 fi
 
 . $cfgfile
@@ -134,11 +134,12 @@ then
     echo "rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
     rsync -n -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL
 
-    read -p "Proceed with sync? (1 for yes, 0 for no)" -t 60 -N 1 DO_IT
+    read -p "Proceed with sync? (1 for yes, 0 for no)" -t 60 -n 1 DO_IT
     if [ "$DO_IT" != "1" ]
     then
         exit 0
     fi
+    echo
 fi
 
 echo "rsync -ra "${RSYNCOPTS[@]}" $SRCURL $DSTURL"
