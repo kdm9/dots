@@ -23,6 +23,7 @@ function show_help() {
     echo
     echo "OPTIONS:"
     echo "    -f    Force operation (default is to ask on CLI)"
+    echo "    -l    List available configs"
     echo
     echo "One of SOURCE_CFG or DEST_CFG must be 'local', indicating the current"
     echo "computer. The other must refer to an existing set of config files"
@@ -54,7 +55,7 @@ function perror() {
     exit 1
 }
 
-while getopts "fh?s:d:" opt; do
+while getopts "fh?l?s:d:" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -62,6 +63,10 @@ while getopts "fh?s:d:" opt; do
         ;;
     f)
         force=yes
+        ;;
+    l)
+        ls $CONFIGDIR
+        exit 0
         ;;
     esac
 done

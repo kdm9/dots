@@ -7,20 +7,20 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'freitass/todo.txt-vim'
-Plugin 'JuliaLang/julia-vim'
+"Plugin 'JuliaLang/julia-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'fidian/hexmode'
 Plugin 'marshallward/vim-restructuredtext'
-if v:version >= 800
+if has('nvim') || v:version >= 800
 Plugin 'jalvesaq/Nvim-R'
 endif
-if v:version >= 704
+if has('nvim') || v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
-if v:version >= 705
+if has('nvim') || v:version >= 705
 Plugin 'Valloric/YouCompleteMe'
 endif
 Plugin 'jpalardy/vim-slime'
@@ -44,12 +44,14 @@ if has("python3")
 else
   let g:pymode_python = 'python'
 endif
+
+let g:pymode_options_max_line_length = 90
 let g:pymode_syntax_print_as_function = 1
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope = 0
 
 " Pandoc config
-let g:pandoc#biblio#sources = 'b'
+let g:pandoc#biblio#sources = 'bcg'
 let g:pandoc#biblio#use_bibtool = 1
 let g:pandoc#command#autoexec_on_writes = 0
 let g:pandoc#command#autoexec_command = 'Pandoc #cite'
@@ -95,17 +97,18 @@ let R_applescript = 0
 let g:goyo_height = '100%'
 
 function! s:goyo_enter()
-    silent !tmux set status off
-    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    "silent !tmux set status off
+    "silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
     set noshowcmd
     "set scrolloff=999
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 
 function! s:goyo_leave()
-    silent !tmux set status on
-    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    "silent !tmux set status on
+    "silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
     "set scrolloff=5
+    set showcmd
 endfunction
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
@@ -122,47 +125,47 @@ endif
 
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
-fu Sp1x()
+fu! Sp1x()
 	setlocal tabstop=1
 	setlocal shiftwidth=1
 	setlocal expandtab
 	setlocal softtabstop=1
 endf
 
-fu Sp2x()
+fu! Sp2x()
 	setlocal tabstop=2
 	setlocal shiftwidth=2
 	setlocal expandtab
 	setlocal softtabstop=2
 endf
 
-fu Sp4x()
+fu! Sp4x()
 	setlocal tabstop=4
 	setlocal shiftwidth=4
 	setlocal expandtab
 	setlocal softtabstop=4
 endf
 
-fu Sp8x()
+fu! Sp8x()
 	setlocal tabstop=8
 	setlocal shiftwidth=8
 	setlocal expandtab
 	setlocal softtabstop=8
 endf
 
-fu Tab4nx()
+fu! Tab4nx()
 	setlocal tabstop=4
 	setlocal shiftwidth=4
 	setlocal noexpandtab
 endf
 
-fu Tab8nx()
+fu! Tab8nx()
 	setlocal tabstop=8
 	setlocal shiftwidth=8
 	setlocal noexpandtab
 endf
 
-fu WrapMode()
+fu! WrapMode()
     setlocal textwidth=0
     setlocal wrap
     setlocal linebreak
@@ -173,7 +176,7 @@ endf
 
 
 """""""""""""""""" Custom filetype functions """""""""""""""""""""""""""""""
-fu Mail_mode()
+fu! Mail_mode()
     call WrapMode()
 	highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 	call Sp2x()
@@ -226,7 +229,7 @@ set tabpagemax=50
 "cabbrev help tab help
 
 " Secure crypto
-if v:version >= 703
+if ! has('nvim') && v:version >= 703
     set cm=blowfish
 endif
 
