@@ -11,7 +11,7 @@ done
 VI=$HOME/.vim
 mkdir -p $VI
 if [ ! -d $VI/bundle/Vundle.vim ]; then
-    mkdir $VI/bundle
+    mkdir -p $VI/bundle
     git clone https://github.com/VundleVim/Vundle.vim.git $VI/bundle/Vundle.vim
 fi
 ln -sf $HERE/vimrc $VI

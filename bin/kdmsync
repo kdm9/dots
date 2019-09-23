@@ -7,7 +7,7 @@
 set -eo pipefail
 
 # Global constants
-CONFIGDIR="$HOME/.kdmsync"
+CONFIGDIR="$(readlink -f "$HOME/.kdmsync/")"
 RSYNC=rsync
 
 
@@ -90,9 +90,9 @@ else
 fi
 
 cfgfile="$cfg/config.sh"
-if [ ! -d "$cfg" ] || [ ! -f "$cfgfile" ]
+if [ ! -f "$cfgfile" ]
 then
-    perror "Remote source/destination config must exist"
+    perror "Remote source/destination '$cfgfile' config must exist"
 fi
 
 . $cfgfile

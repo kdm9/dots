@@ -97,7 +97,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/taskwarrior
     zgen oh-my-zsh plugins/tmux
-    zgen oh-my-zsh plugins/virtualenvwrapper
+    #zgen oh-my-zsh plugins/virtualenvwrapper
 
     # Hist search
     zgen load zsh-users/zsh-history-substring-search
@@ -123,7 +123,7 @@ if ! zgen saved; then
     zgen load voronkovich/gitignore.plugin.zsh
 
     # Theme
-    zgen load caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+    zgen load kdmurray91/bullet-train.zsh bullet-train
 
     zgen load kloetzl/biozsh
 

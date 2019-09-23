@@ -16,7 +16,7 @@ Plugin 'jalvesaq/Nvim-R'
 endif
 if has('nvim') || v:version >= 704
 Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-rmarkdown'
+"Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 endif
@@ -45,10 +45,12 @@ else
   let g:pymode_python = 'python'
 endif
 
-let g:pymode_options_max_line_length = 90
+let g:pymode_options_colorcolumn = 0
+let g:pymode_options_max_line_length = 100
 let g:pymode_syntax_print_as_function = 1
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope = 0
+let g:pymode_folding = 1
 
 " Pandoc config
 let g:pandoc#biblio#sources = 'bcg'
@@ -248,7 +250,7 @@ set nonumber
 " set ignorecase
 " set smartcase
 set wildmenu  "menu for tab completion
-set directory=~/.vim/tmp/
+"set directory=~/.vim/tmp/
 
 
 " Bad whitespace
@@ -269,7 +271,7 @@ autocmd BufNewFile,BufRead *.snakefile set syntax=snakemake
 autocmd BufNewFile,BufRead *.snake set syntax=snakemake
 
 autocmd BufNewFile,BufRead *.mdpres,*.md set filetype=pandoc
-autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
+"autocmd BufNewFile,BufRead *.Rmd set filetype=rmarkdown
 autocmd BufNewFile,BufRead *.mdpres,*.md,*.Rmd,*.rst call WrapMode()
 
 autocmd BufNewFile,BufRead *.yml,*.yaml call Sp2x()

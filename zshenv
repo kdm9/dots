@@ -37,3 +37,4 @@ do
 done
 
 export PATH="$HOME/.dots/bin:$PATH"
+source "$HOME/.homedir/profile.sh"
