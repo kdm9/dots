@@ -9,5 +9,21 @@ function mkcd {
 }
 
 function mkdatedir {
-    mkdir "$(date +%Y-%m-%d_${1})"
+    d="$(date +%Y-%m-%d_${1})"
+    mkdir -p "$d" && cd "$d"
+}
+
+function taskstatus() {
+    if [ ! -e $HOME/.task ] || [ -z "$(which task 2>/dev/null)" ]
+    then
+        return
+    fi
+    dfile="$HOME/.zgen/lastzsh"
+    now="$(date +%s)"
+    lasttime="$(cat "$dfile" 2>/dev/null )"
+    if [ -z "$lasttime" ] || [ $(($now - $lasttime)) -gt 300 ]
+    then
+        task next
+        echo $now > "$dfile"
+    fi
 }

@@ -24,3 +24,4 @@ alias vim='nvim -p'
 alias vi='nvim -p'
 alias whatismyip='wget -qO- icanhazip.com'
 alias mv='mv -i'
+alias ts="task sync"
