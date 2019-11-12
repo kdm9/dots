@@ -33,13 +33,13 @@ sourceifexists "$HOME/.zshlocal"
 # Unfortunately some of these seem to need to be above the zgen stanza below
 
 # Virtualenvwrapper
-export WORKON_HOME="$HOME/.virtualenvs/"
+#export WORKON_HOME="$HOME/.virtualenvs/"
 
 # tmux
 ZSH_TMUX_AUTOSTART=${ZSH_TMUX_AUTOSTART:-true}
 ZSH_TMUX_AUTOQUIT=${ZSH_TMUX_AUTOQUIT:-false}
 ZSH_TMUX_AUTOCONNECT=${ZSH_TMUX_AUTOCONNECT:-false}
-ZSH_TMUX_FIXTERM=${ZSH_TMUX_FIXTERM:-false}
+ZSH_TMUX_FIXTERM=${ZSH_TMUX_FIXTERM:-true}
 
 BULLETTRAIN_CONTEXT_SHOW=true
 BULLETTRAIN_IS_SSH_CLIENT=true
@@ -78,7 +78,6 @@ BULLETTRAIN_PROMPT_ORDER=(
     custom
     context
     dir
-    virtualenv
     git
     cmd_exec_time
   )
@@ -151,7 +150,7 @@ taskstatus
 test -f /proc/mdstat && awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </proc/mdstat
 
 # Ensure tmux termcap is defined
-TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
+#TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term
 
 ################################################################################
 #                              load zshlocal.post                              #

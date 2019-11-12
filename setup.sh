@@ -8,12 +8,4 @@ do
     ln -fs "$HERE/${dotfile}" "$HOME/.${dotfile}"
 done
 
-VI=$HOME/.vim
-mkdir -p $VI
-if [ ! -d $VI/bundle/Vundle.vim ]; then
-    mkdir -p $VI/bundle
-    git clone https://github.com/VundleVim/Vundle.vim.git $VI/bundle/Vundle.vim
-fi
-ln -sf $HERE/vimrc $VI
-vim +PluginInstall +qall
-unset VI
+mkdir -p "$HOME/.config/nvim" && ln -sf "$HERE/nvim-init.vim" "$HOME/.config/nvim/init.vim"
