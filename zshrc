@@ -7,7 +7,7 @@ export EDITOR='vim'
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 export VIRTUALENVWRAPPER_PYTHON="${VIRTUALENVWRAPPER_PYTHON:-python3}"
 
-if [ -n "$(which lesspipe)" ]
+if [ -n "$(which lesspipe 2>/dev/null)" ]
 then
     eval $(lesspipe)
 fi
@@ -156,4 +156,4 @@ test -f /proc/mdstat && awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </
 ################################################################################
 
 # Source here to ensure post script is final
-test -f "$HOME/.zshlocal.post" && source "$HOME/.zshlocal.post"
+sourceifexists "$HOME/.zshlocal.post"
