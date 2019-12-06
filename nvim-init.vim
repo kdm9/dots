@@ -166,3 +166,4 @@ nnoremap <leader>p <Esc>:set paste<CR>"+p<CR>:set nopaste<CR>
 inoremap <leader>w <Esc>:wa<CR>a
 nnoremap <leader>w <Esc>:wa<CR>
 
+set guicursor=

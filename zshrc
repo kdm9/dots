@@ -142,11 +142,10 @@ bindkey '^S' history-incremental-search-forward
 #                         KDM specific aliases & funcs                         #
 ################################################################################
 
-sourceifexists "$HOME/.homedir/dots/aliases.sh"
-sourceifexists "$HOME/.homedir/dots/functions.sh"
+sourceifexists "$HOME/.dots/aliases.sh"
+sourceifexists "$HOME/.dots/functions.sh"
 
-
-taskstatus
+which taskstatus >/dev/null 2>&1 && taskstatus
 test -f /proc/mdstat && awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </proc/mdstat
 
 # Ensure tmux termcap is defined

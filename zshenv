@@ -37,4 +37,4 @@ do
 done
 
 export PATH="$HOME/.dots/bin:$PATH"
-test -f "$HOME/.homedir/profile.sh" || source "$HOME/.homedir/profile.sh"
+test -f "$HOME/.homedir/profile.sh" && source "$HOME/.homedir/profile.sh"
