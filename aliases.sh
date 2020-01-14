@@ -20,8 +20,14 @@ alias texspell='aspell -d en_GB -t -c '
 alias time='/usr/bin/time -f "\n\n%%TIME: [usr:%U sys:%S %P wall:%E rss:%M]"'
 alias trimspace='perl -p -i -e "s/\s+$/\n/"'
 alias utc='TZ=UTC date'
-alias vim='nvim -p'
-alias vi='nvim -p'
+if [ -n "$(which nvim 2>/dev/null)" ]
+then
+	alias vim='nvim -p'
+	alias vi='nvim -p'
+else
+	alias vim='vim -p'
+	alias vi='vim -p'
+fi
 alias whatismyip='wget -qO- icanhazip.com'
 alias mv='mv -i'
 alias ts="task sync"
