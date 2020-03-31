@@ -13,8 +13,15 @@ Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
 Plug 'gaalcaras/ncm-R'
 Plug 'chrisbra/csv.vim'
 Plug 'wellle/tmux-complete.vim'
-Plug 'sirver/UltiSnips'
-Plug 'ncm2/ncm2-ultisnips'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'iCyMind/NeoSolarized'
 Plug 'ncm2/ncm2-syntax'
 Plug 'Shougo/neco-syntax'
@@ -24,6 +31,10 @@ Plug 'sirtaj/vim-openscad'
 if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+
 call plug#end()
 
 set termguicolors
@@ -32,8 +43,29 @@ colorscheme NeoSolarized
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
+" snippets
+let g:deoplete#enable_at_startup = 1
+let g:UltiSnipsEditSplit = "context"
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsListSnippets = '<c-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+let g:ultisnips_python_style = "sphinx"
+
+" Pandoc config
+let g:pandoc#biblio#sources = 'bcg'
+let g:pandoc#biblio#use_bibtool = 1
+let g:pandoc#folding#level = 0
+let g:pandoc#folding#fdc = 0
+let g:pandoc#formatting#equalprg = ''
+let g:pandoc#formatting#mode = 'h'
+"let g:pandoc#formatting#textwidth = 79
+let g:pandoc#syntax#conceal#urls = 1
+let g:pandoc#syntax#conceal#use = 0
+
 " IMPORTANT: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
+
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
 fu! Sp1x()

@@ -1,20 +1,28 @@
 #!/bin/bash
-CMD=$(xrandr | awk '
-    BEGIN{
-        printf("xrandr ");
-        m=""
-    }
-    NR > 1 && $0 !~ /^ / {
-        if ($1 ~ /^eDP/){
-            m=$1;
-            printf("--output %s --auto ", m);
-        } else if ($2 == "connected"){
-            printf("--output %s --auto --left-of %s ", $1, m);
-        } else {
-            printf("--output %s --off ", $1);
+set -x
+if [ -s "${HOME}/.xrcmd" ]
+then
+    # host-specific config
+    . "${HOME}/.xrcmd"
+else
+    # general best guess
+    CMD=$(xrandr | awk '
+        BEGIN{
+            printf("xrandr ");
+            m=""
         }
-    }
-    END{printf("\n");}
-')
-echo $CMD
-eval $CMD
+        NR > 1 && $0 !~ /^ / {
+            if ($1 ~ /^eDP/){
+                m=$1;
+                printf("--output %s --auto ", m);
+            } else if ($2 == "connected"){
+                printf("--output %s --auto --left-of %s ", $1, m);
+            } else {
+                printf("--output %s --off ", $1);
+            }
+        }
+        END{printf("\n");}
+    ')
+    echo $CMD
+    eval $CMD
+fi

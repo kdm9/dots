@@ -7,7 +7,7 @@
 set -eo pipefail
 
 # Global constants
-CONFIGDIR="$(readlink -f "$HOME/.kdmsync/")"
+CONFIGDIR="$(readlink -f "${XDG_CONFIG_DIR:-$HOME/.config}/kdmsync/")"
 RSYNC=rsync
 
 
