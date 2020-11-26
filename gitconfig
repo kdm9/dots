@@ -6,6 +6,7 @@
 	user = kdmurray91
 [pull]
 	default = tracking
+	rebase = true
 [push]
 	default = tracking
 [core]

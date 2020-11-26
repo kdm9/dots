@@ -41,8 +41,6 @@ ZSH_TMUX_AUTOQUIT=${ZSH_TMUX_AUTOQUIT:-false}
 ZSH_TMUX_AUTOCONNECT=${ZSH_TMUX_AUTOCONNECT:-false}
 ZSH_TMUX_FIXTERM=${ZSH_TMUX_FIXTERM:-true}
 
-BULLETTRAIN_CONTEXT_SHOW=true
-BULLETTRAIN_IS_SSH_CLIENT=true
 
 ################################################################################
 #                                     Zgen                                     #
@@ -63,15 +61,18 @@ unset __ZGEN
 ################################################################################
 
 # Colour context red if we're on a remote server
+BULLETTRAIN_CONTEXT_SHOW=true
 if [ -n "$SSH_CLIENT" ]
 then
     BULLETTRAIN_CONTEXT_BG=red
     BULLETTRAIN_CONTEXT_FG=black
+    BULLETTRAIN_IS_SSH_CLIENT=true
 else
     BULLETTRAIN_CONTEXT_BG=green
     BULLETTRAIN_CONTEXT_FG=white
+    BULLETTRAIN_IS_SSH_CLIENT=false
 fi
-BULLETTRAIN_SEGMENT_SEPARATOR="▌"
+BULLETTRAIN_SEGMENT_SEPARATOR=""
 BULLETTRAIN_PROMPT_ORDER=(
     time
     status
@@ -79,6 +80,7 @@ BULLETTRAIN_PROMPT_ORDER=(
     context
     dir
     git
+    virtualenv
     cmd_exec_time
   )
 
@@ -112,7 +114,8 @@ if ! zgen saved; then
 
     # Warns you when you have an alias for the command you just typed, and tells
     # you what it is.
-    zgen load djui/alias-tips
+    #zgen load djui/alias-tips
+    zgen oh-my-zsh plugins/alias-finder
 
     # Improvements to vi-mode
     zgen load sharat87/zsh-vim-mode
@@ -145,8 +148,6 @@ bindkey '^S' history-incremental-search-forward
 sourceifexists "$HOME/.dots/aliases.sh"
 sourceifexists "$HOME/.dots/functions.sh"
 
-which taskstatus >/dev/null 2>&1 && taskstatus
-test -f /proc/mdstat && awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </proc/mdstat
 
 # Ensure tmux termcap is defined
 #TERM=tmux tput cols >/dev/null 2>&1 || tic ${HOME}/.dots/tmux.term

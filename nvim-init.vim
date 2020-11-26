@@ -12,6 +12,7 @@ Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
 Plug 'gaalcaras/ncm-R'
 Plug 'chrisbra/csv.vim'
+Plug 'rickhowe/diffchar.vim'
 Plug 'wellle/tmux-complete.vim'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -22,7 +23,7 @@ else
 endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'iCyMind/NeoSolarized'
+Plug 'overcache/NeoSolarized'
 Plug 'ncm2/ncm2-syntax'
 Plug 'Shougo/neco-syntax'
 Plug 'junegunn/goyo.vim'
@@ -33,13 +34,15 @@ if !has('nvim')
 endif
 
 Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-criticmarkup'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 call plug#end()
 
 set termguicolors
-colorscheme NeoSolarized
-
+set background=light
+"colorscheme NeoSolarized
+"#
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
