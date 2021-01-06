@@ -3,7 +3,7 @@
 	email = foss@kdmurray.id.au
 	signingkey = 656C06321EAB2C3F3837976717C28EB1A4B4EE6A
 [github]
-	user = kdmurray91
+	user = kdm9
 [pull]
 	default = tracking
 	rebase = true
@@ -28,3 +28,5 @@
 
 [diff "tsv"]
     wordRegex = "[^\\t]\\\\+"
+[credential]
+	helper = cache

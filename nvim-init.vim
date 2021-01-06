@@ -191,6 +191,14 @@ noremap <leader>n <Esc>:tabnew
 noremap <leader>h <Esc>:tabmove -1<CR>
 noremap <leader>l <Esc>:tabmove +1<CR>
 
+command Wq wq
+command WQ wq
+command W w
+command Q q
+nnoremap Q <nop>
+map <F1> <Esc>
+imap <F1> <Esc>
+
 noremap j gj
 noremap k gk
 
