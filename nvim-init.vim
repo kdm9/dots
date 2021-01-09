@@ -36,6 +36,7 @@ endif
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-criticmarkup'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'godlygeek/tabular'
 
 call plug#end()
 
