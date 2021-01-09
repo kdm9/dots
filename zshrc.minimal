@@ -1,10 +1,12 @@
 ################################################################################
 #                                  ZSH config                                  #
 ################################################################################
+function sourceifexists() {
+    file="$1"
+    test -f "$file" && source "$file"
+}
 
-export FPATH="$FPATH:/usr/share/zsh/5.5.1/functions/:/usr/share/zsh/site-functions/"
-autoload -Uz compinit
-compinit
+sourceifexists "$HOME/.zshlocal.pre"
 
 export LANG=en_AU.UTF-8
 export EDITOR='nvim'
@@ -15,10 +17,6 @@ then
     eval $(lesspipe)
 fi
 
-function sourceifexists() {
-    file="$1"
-    test -f "$file" && source "$file"
-}
 
 setopt autocd extendedglob notify
 setopt histignorespace
@@ -27,7 +25,6 @@ unsetopt beep
 stty -ixon
 
 # Source here to ensure all plugins have paths etc. set right
-sourceifexists "$HOME/.zshlocal.pre"
 sourceifexists "$HOME/.zshlocal"
 
 ################################################################################
@@ -79,7 +76,7 @@ if ! zgen saved; then
     #zgen oh-my-zsh plugins/virtualenvwrapper
 
     # Hist search
-    #zgen load zsh-users/zsh-history-substring-search
+    zgen load zsh-users/zsh-history-substring-search
 
     # ZSH command syntax hl
     #zgen load zsh-users/zsh-syntax-highlighting
@@ -102,7 +99,7 @@ if ! zgen saved; then
     #zgen load voronkovich/gitignore.plugin.zsh
 
     # Theme
-    #zgen load kdmurray91/bullet-train.zsh bullet-train
+    zgen load kdmurray91/bullet-train.zsh bullet-train
 
     #zgen load kloetzl/biozsh
 

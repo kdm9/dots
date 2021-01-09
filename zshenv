@@ -7,7 +7,7 @@ then
    export PATH="/usr/lib/debian-med/bin:$PATH"
 fi
 
-AUTOPATH_PREFIXES=( "$HOME" "$HOME/opt" "$HOME/.local" "$HOME/.cabal")
+AUTOPATH_PREFIXES=( "$HOME" "$HOME/opt" "$HOME/.local" "$HOME/.dots")
 
 for prefix in "${AUTOPATH_PREFIXES[@]}"
 do
@@ -36,5 +36,5 @@ do
 
 done
 
-export PATH="$HOME/.dots/bin:$PATH"
 test -f "$HOME/.homedir/profile.sh" && source "$HOME/.homedir/profile.sh"
+test -f "$HOME/.zshenv.local" && source "$HOME/.zshenv.local"
