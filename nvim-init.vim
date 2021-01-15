@@ -10,6 +10,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
+Plug 'kassio/neoterm'
 Plug 'gaalcaras/ncm-R'
 Plug 'chrisbra/csv.vim'
 Plug 'rickhowe/diffchar.vim'
@@ -67,8 +68,25 @@ let g:pandoc#formatting#mode = 'h'
 let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 0
 
+" neoterm
+nmap gx <Plug>(neoterm-repl-send)
+xmap gx <Plug>(neoterm-repl-send)
+nmap gl <Plug>(neoterm-repl-send-line)
+tnoremap <Esc> <C-\><C-n>
+let g:neoterm_autoscroll = 1
+let g:neoterm_auto_repl_cmd = 0
+let g:neoterm_callbacks = {}
+function! g:neoterm_callbacks.before_new()
+  if winwidth('.') > 100
+    let g:neoterm_default_mod = 'botright vertical'
+  else
+    let g:neoterm_default_mod = 'botright'
+  end
+endfunction
+
 " IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+au User Ncm2PopupClose set completeopt=menuone
 
 
 """"""""""""""""""" Indentation functions """"""""""""""""""""""""""""""""
