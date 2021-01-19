@@ -33,7 +33,7 @@ Plug 'sirtaj/vim-openscad'
 if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
-
+Plug 'ledger/vim-ledger'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-criticmarkup'
 Plug 'vim-pandoc/vim-pandoc-syntax'
