@@ -3,7 +3,7 @@
 set -xe
 HERE=$(dirname $(readlink -f "$0"))
 
-for dotfile in gitconfig gitignore_global tmux.conf zshrc zshenv inputrc
+for dotfile in gitconfig gitignore_global tmux.conf zshrc zshenv inputrc screenrc
 do
     ln -fs "$HERE/${dotfile}" "$HOME/.${dotfile}"
 done
