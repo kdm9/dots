@@ -38,7 +38,8 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-criticmarkup'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'godlygeek/tabular'
-
+Plug 'kdm9/vim-snakemake'
+Plug 'tpope/vim-sensible'
 call plug#end()
 
 set termguicolors
@@ -229,3 +230,4 @@ inoremap <leader>w <Esc>:wa<CR>a
 nnoremap <leader>w <Esc>:wa<CR>
 
 set guicursor=
+

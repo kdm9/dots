@@ -30,3 +30,5 @@
     wordRegex = "[^\\t]\\\\+"
 [credential]
 	helper = cache
+[init]
+	defaultBranch = main

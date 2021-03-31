@@ -46,10 +46,11 @@ ZSH_TMUX_FIXTERM=${ZSH_TMUX_FIXTERM:-true}
 #                                     Zgen                                     #
 ################################################################################
 # Double underscore not to clash w/ zgen's internals
-__ZGEN_DIR="$HOME/.zgen"
-__ZGEN="$__ZGEN_DIR/zgen.zsh"
-if [ ! -f $__ZGEN ]; then
-    git clone https://github.com/tarjoilija/zgen.git $__ZGEN_DIR
+__ZGEN_DIR="$HOME/.cache/zgenom"
+__ZGEN="$__ZGEN_DIR/zgenom.zsh"
+if [ ! -f $__ZGEN ];
+then
+    git clone https://github.com/jandamm/zgenom.git $__ZGEN_DIR
 fi
 source $__ZGEN
 unset __ZGEN_DIR
@@ -125,7 +126,9 @@ if ! zgen saved; then
     zgen load voronkovich/gitignore.plugin.zsh
 
     # Theme
-    zgen load kdmurray91/bullet-train.zsh bullet-train
+    zgen load kdm9/bullet-train.zsh bullet-train
+
+    zgen load kdm9/zsh-autoactivate-conda
 
     zgen load kloetzl/biozsh
 

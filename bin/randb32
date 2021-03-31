@@ -1,0 +1,3 @@
+#!/bin/bash
+LENGTH=${LENGTH:-16}
+head -c "$LENGTH" /dev/random | base32 | head -c "$LENGTH" | tr 'A-Z' 'a-z' ; echo 
