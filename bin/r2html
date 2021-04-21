@@ -1,0 +1,8 @@
+#!/bin/bash
+set -xeu
+wdir=$(dirname $1)
+pushd $wdir
+rmd=$(basename $1 .R).Rmd
+jupytext --output $rmd --to Rmd $1
+Rscript -e "rmarkdown::render('$rmd', output_format='html_document')"
+rm $rmd

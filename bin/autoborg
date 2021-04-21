@@ -1,0 +1,114 @@
+#!/bin/bash
+
+
+# TODO for debugging
+#set -x
+
+set -eo pipefail
+
+# Global constants
+CONFIGDIR="$(readlink -f "${XDG_CONFIG_DIR:-$HOME/.config}/autoborg/")"
+BORG=${BORG:-borg}
+
+verb=0
+
+function listconfigs() {
+    echo "The following configurations are availabe:"
+    echo 
+    ls -1 "$CONFIGDIR" | sed 's/^/  - /'
+}
+
+function usage() {
+    echo "USAGE: autoborg CONFIG BORG_SUBCOMMAND [BORG_OPTIONS...]"
+    echo
+    echo 'e.g. "autoborg critical_files create" -> borg create $REPO::$TAG $LOCAL_PATH'
+}
+
+function full_help() {
+    usage
+    echo
+    echo "Config files are placed under a directory within '$CONFIGDIR'"
+    echo
+    echo "A config directory should contain:"
+    echo "    - config.sh  # A config file in bash"
+    echo "    - exclude    # (optional) An borg exclude file"
+    echo
+    echo "config.sh must define the following variables:"
+    echo
+    echo " * BORG_REPO: Borg repository URL"
+    echo " * BORG_PASSPHRASE: Borg repository passphrase. Can also use one of the other passphrase-provision variables like BORG_PASSCOMMAND."
+    echo " * LOCAL_PATH: A path on the local computer that is the source"
+    echo " * BORG_ARGS_${SUBCOMMAND} e.g. BORG_ARGS_create"
+    echo
+    echo
+    listconfigs
+}
+
+function perror() {
+    echo "ERROR: $@"
+    echo
+    usage
+    exit 1
+}
+
+if [ $# -eq 0 ]
+then
+    full_help
+    exit 0
+fi
+
+config="${1}"
+subcommand="${2}"
+shift 2
+
+if [ -z "$config" ]
+then
+    perror "Must specifiy borg config"
+fi
+
+if [ -z "${subcommand}" ]
+then
+    perror "Must specific borg subcommand"
+fi
+
+cfg="${CONFIGDIR}/${config}"
+cfgfile="$cfg/config.sh"
+if [ ! -f "$cfgfile" ]
+then
+    perror "Config file '$cfgfile' must exist"
+fi
+export CONFIGNAME="${config}"
+export CONFIGDIR="${cfg}"
+export BORG_SUBCOMMAND="${subcommand}"
+. $cfgfile
+
+BORG_ARGS=( "${BORG_ARGS[@]}" )
+
+if [ $subcommand == "--" ]
+then
+    echo "Custom mode" "$@"
+    subcommand="${1}"
+    shift 1
+else
+    argvar="BORG_ARGS_${subcommand}[@]"
+    if [[ -v "$argvar" ]]
+    then
+        BORG_ARGS+=("${!argvar}")
+    fi
+fi
+
+
+if [ -f "$cfg/pre.sh" ]
+then
+    . "$cfg/pre.sh"
+fi
+
+
+echo $BORG $subcommand "${BORG_ARGS[@]}" "$@"
+# unset display to use tui for passphrase detection
+$BORG $subcommand "${BORG_ARGS[@]}" "$@"
+
+if [ -f "$cfg/post.sh" ]
+then
+    . "$cfg/post.sh"
+fi

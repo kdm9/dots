@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+from tqdm import tqdm
+
+import json
+import hashlib
+from collections import defaultdict
+import os
+from os.path import getsize, splitext, isdir
+from pathlib import Path
+from concurrent.futures import as_completed, ThreadPoolExecutor
+import sys
+from sys import stderr
+import traceback
+import argparse
+import functools
+from random import shuffle
+
+
+def find_files(directories, minsize=0):
+    if isinstance(directories, str):
+        directories = [directories, ]
+    for rootdir in directories:
+        if not isdir(rootdir) and getsize(rootdir) > minsize:
+            yield rootdir, getsize(rootdir)
+        for root, dirs, files in os.walk(rootdir):
+            for file in files:
+                path = str(Path(root, file))
+                try:
+                    if getsize(path) > minsize:
+                        yield path, getsize(path)
+                except Exception as exc:
+                    print(str(exc), file=stderr)
+                    if stderr.isatty():
+                        traceback.print_exc()
+
+
+def get_md5sum(path, max_bytes=None):
+    try:
+        pathsize = getsize(path)
+        if max_bytes is None or max_bytes < 1 or max_bytes > pathsize:
+            max_bytes = pathsize
+        h = hashlib.md5()
+        with open(path, 'rb') as fh:
+            bytes_read = 0
+            while bytes_read < max_bytes:
+                chunk = fh.read(1000000)
+                bytes_read += len(chunk)
+                h.update(chunk)
+        return path, h.hexdigest()
+    except Exception as err:
+        return path, str(err)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--hashout", default=None, type=argparse.FileType("w"),
+            help="Write hashes out here")
+    ap.add_argument("--dupout", default=None, type=argparse.FileType("w"),
+            help="write dupes out here")
+    ap.add_argument("--ext", action="append",  type=str,
+            help="Allow only files of these extension (e.g. --ext jpg --ext tif). Case insenstive.")
+    ap.add_argument("--min-size", default=0, type=int,
+            help="minimum file size")
+    ap.add_argument("--first-pass-size", default=100000, type=int,
+            help="Size of first pass. Set to 0 to skip the first pass and just cluster by whole files.")
+    ap.add_argument("--first-pass-only", action="store_true",
+            help="Only do a first pass check on the first 100kb.")
+    ap.add_argument("directories", nargs="+",
+            help="Directories to search")
+    args = ap.parse_args()
+
+    allowed_exts = set()
+    if args.ext:
+        allowed_exts = set([ext.lstrip(".").lower() for ext in args.ext])
+    print("Finding files... ", file=stderr, end='')
+    filesizes = defaultdict(list)
+    for file, size in find_files(args.directories, args.min_size):
+        base, ext = splitext(file)
+        if len(allowed_exts) > 0 and ext.lstrip('.').lower() not in allowed_exts:
+            print("skip", file, file=stderr)
+            continue
+        filesizes[size].append(file)
+    skip = 0
+    allfiles = []
+    for size, files in filesizes.items():
+        if len(files) < 2:
+            skip += 1
+        else:
+            allfiles.extend(files)
+    print("Done, found ", len(allfiles), "files, eliminated", skip, "files with unique size.", file=stderr)
+    #shuffle(files)
+
+    if args.first_pass_size > 0:
+        print(f"First-pass lazy clustering by first {args.first_pass_size}b of each file:", file=stderr)
+    else:
+        print("Clustering by file content:", file=stderr)
+    hashes = defaultdict(list)
+    get_hash_first = functools.partial(get_md5sum, max_bytes=args.first_pass_size)
+    with ThreadPoolExecutor() as executor:
+        for path, md5 in tqdm(executor.map(get_hash_first, allfiles), total=len(allfiles)):
+            hashes[md5].append(path)
+    if args.hashout is not None:
+        json.dump(hashes, args.hashout)
+
+    if args.first_pass_only or args.first_pass_only < 1:
+        for sh, sf in hashes.items():
+            sf.sort()
+            if len(sf) > 1:
+                print(sh, *sf, sep='\t')
+        return
+
+    print("Second-pass clustering of putative duplicate files:", file=stderr)
+    dups = {}
+    with ThreadPoolExecutor() as executor:
+        for h, files in tqdm(hashes.items()):
+            if len(files) <= 1:
+                continue
+            subhash = defaultdict(list)
+            for fn in files:
+                try:
+                    f, md5sum = get_md5sum(fn)
+                    subhash[md5sum].append(fn)
+                except Exception as exc:
+                    print("WARNING: error during re-read of", fn, ":", str(exc), file=stderr)
+        for sh, sf in subhash.items():
+            sf.sort()
+            if len(sf) > 1:
+                dups[sh] = sf
+                print(sh, *sf, sep='\t')
+    if args.dupout is not None:
+        json.dump(dups, args.dupout)
+
+
+if __name__ == "__main__":
+    main()
