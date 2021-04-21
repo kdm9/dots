@@ -9,7 +9,7 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
-Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
+"Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
 Plug 'kassio/neoterm'
 Plug 'gaalcaras/ncm-R'
 Plug 'chrisbra/csv.vim'
