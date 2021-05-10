@@ -11,7 +11,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 "Plug 'jalvesaq/Nvim-R', { 'for' : 'r'}
 Plug 'kassio/neoterm'
-Plug 'gaalcaras/ncm-R'
+"Plug 'gaalcaras/ncm-R'
 Plug 'chrisbra/csv.vim'
 Plug 'rickhowe/diffchar.vim'
 Plug 'wellle/tmux-complete.vim'
