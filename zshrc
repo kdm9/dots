@@ -95,7 +95,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/debian
     zgen oh-my-zsh plugins/git
     #zgen oh-my-zsh plugins/ssh-agent
-    zgen oh-my-zsh plugins/gpg-agent
+    #zgen oh-my-zsh plugins/gpg-agent
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/taskwarrior
     zgen oh-my-zsh plugins/tmux
